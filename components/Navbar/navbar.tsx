@@ -3,10 +3,11 @@ import { Button } from "../ui/button"
 import Image from "next/image"
 import logo from '../../assets/images/eameds.png'
 import { auth } from "@clerk/nextjs/server"
-import { UserButton } from "@clerk/nextjs"
+import { UserButton, useSession } from "@clerk/nextjs"
+import { checkUserRole } from "@/utils/role"
 
 export const Navbar = () => {
-    const { userId } = auth();    
+    const { userId } = auth();
 
     return (
         <div>

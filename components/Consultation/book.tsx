@@ -34,7 +34,7 @@ const formSchema = z.object({
     gender: z.enum(['Male', 'Female'], {message: 'Gender is required'}),
     location: z.string(),
     file: typeof window === 'undefined' ? z.any() : z.instanceof(FileList),
-    number: z.string().min(10, { message: 'Phone Number is Required'}),
+    number: z.string().min(10, { message: 'Phone Number is Less then 10 digits'}),
     healthcare: z.string({required_error: "Health Care is Required"}),
     consultation: z.string({required_error: "Consultation Type is Required"}),
     condition: z.string().min(1, { message: 'Medical Condition is Required'}),

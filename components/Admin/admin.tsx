@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const Admin = ({ consultations }: Props) => {
-  console.log(consultations);
+  // console.log(consultations);
   
     return (
         <div className="flex w-full bg-gray-50">

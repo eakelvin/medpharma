@@ -1,10 +1,25 @@
 import Footer from '@/components/Footer/page'
 import { Navbar } from '@/components/Navbar/navbar'
 import { Button } from '@/components/ui/button'
+import { allConsultations } from '@/utils/api'
+import { currentUser } from '@clerk/nextjs/server'
 import React from 'react'
 import { FaPills } from 'react-icons/fa'
+import { AiTwotoneSchedule } from "react-icons/ai";
+import { Consultation } from '@/utils/types'
 
-const UserDashboard = () => {
+const UserDashboard = async () => {
+  const user = await currentUser();
+  const consultations:Consultation[] = await allConsultations();
+
+  const matchedConsultations = consultations.filter(consultation =>
+    consultation.email === user?.emailAddresses[0].emailAddress &&
+    consultation.patientFirst === user?.firstName &&
+    consultation.patientLast === user?.lastName
+  );
+  console.log(matchedConsultations);
+  
+
   return (
     <div>
       <Navbar />
@@ -22,7 +37,7 @@ const UserDashboard = () => {
                   <input 
                     type="search" 
                     id="default-search" 
-                    className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
                     placeholder="Search..." 
                     required 
                   />
@@ -38,26 +53,28 @@ const UserDashboard = () => {
         <div>
           <h1 className='text-3xl mt-5'>Consultation Details</h1>
           <div>
-            <div className="mt-5 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              Icon
-              <p className="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">doage</p>
-              <p className='font-extrabold text-3xl'>name</p>
-              <p className="mb-2 font-normal text-gray-500 dark:text-gray-400">when</p>
-              <p className="">date</p>
-
-              <div className="mt-3 inline-flex rounded-md shadow-sm" role="group">
-              {/* <Link> */}
-                  <button type="button" className="px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-s-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
-                      Edit
-                  </button>
-              {/* </Link> */}
-              <button 
-                  type="button" 
-                  className="px-4 py-2 text-sm font-medium bg-red-500 text-gray-900 bg-transparent border border-gray-900 rounded-e-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
-                  Delete
-              </button>
-              </div>
-            </div>
+            {matchedConsultations.length > 0 ? (
+              matchedConsultations.map((consultation) => (
+                <div key={consultation._id} className="mt-5 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                  <AiTwotoneSchedule size={30} />
+                  <p className="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    Healthcare: {consultation.healthcare}
+                  </p>
+                  <p className='font-extrabold text-xl'>Consultation Type: {consultation.consultation}</p>
+                  <p>Condition: <span className='text-sm'>{consultation.condition}</span></p>
+                  <p className="my-2 font-normal text-gray-500 dark:text-gray-400">
+                    Appointment Date:
+                    {new Date(consultation.consultDate).toLocaleDateString()}
+                  </p>
+                  <p className="font-normal text-gray-500 dark:text-gray-400">
+                    Appointment Time: {consultation.consultTime}
+                  </p>
+                  <p className=""></p>
+                </div>
+              ))
+            ) : (
+              <p>You do not have a consultation. Kindly see an officer to book one</p>
+            )} 
           </div>
         </div>
       </div>
