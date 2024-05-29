@@ -30,7 +30,7 @@ const formSchema = z.object({
     patientFirst: z.string().min(1, { message: 'First Name is Required' }),
     patientLast: z.string().min(1, { message: 'Last Name is Required' }),
     dob: z.string().date(),
-    email: z.string().email(),
+    email: z.string().email().optional(),
     gender: z.enum(['Male', 'Female'], {message: 'Gender is required'}),
     location: z.string(),
     file: typeof window === 'undefined' ? z.any() : z.instanceof(FileList),
@@ -50,7 +50,7 @@ export const ConsultationForm = () => {
             patientFirst: "",
             patientLast: "",
             dob: "",
-            email: "",
+            // email: "",
             condition: "",
             number: "",
             location: "",
@@ -73,7 +73,8 @@ export const ConsultationForm = () => {
             form.reset();
         } catch (error) {
             console.error('Error submitting the form:', error);
-            toast.error(`${error}`, {position: 'top-right'})           
+            // toast.error(`${error}`, {position: 'top-right'})           
+            toast.error("This didn't work", {position: 'top-right'})           
         } finally {
             setLoading(false);
         }   
@@ -177,7 +178,7 @@ export const ConsultationForm = () => {
                                     <FormItem>
                                     <FormLabel>Phone Number</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder='' type='number' />
+                                        <Input {...field} placeholder='' type='text' />
                                     </FormControl>
                                     <FormMessage />
                                     </FormItem>
@@ -236,16 +237,16 @@ export const ConsultationForm = () => {
                                         </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                        <SelectItem value="enterprise">Enterprise Insurance</SelectItem>
-                                        <SelectItem value="star">Star Assurance</SelectItem>
-                                        <SelectItem value="sic">SIC Insurance</SelectItem>
-                                        <SelectItem value="hollard">Hollard Insurance</SelectItem>
-                                        <SelectItem value="glico">Glico General Insurance</SelectItem>
-                                        <SelectItem value="vanguard">Vanguard Assurance</SelectItem>
-                                        <SelectItem value="prime">Prime Insurance</SelectItem>
-                                        <SelectItem value="best">Best Assurance</SelectItem>
-                                        <SelectItem value="loyalty">Loyalty Insurance</SelectItem>
-                                        <SelectItem value="millennium">Millennium Insurance</SelectItem>
+                                        <SelectItem value="enterprise insurance">Enterprise Insurance</SelectItem>
+                                        <SelectItem value="star assurance">Star Assurance</SelectItem>
+                                        <SelectItem value="sic insurance">SIC Insurance</SelectItem>
+                                        <SelectItem value="hollard insurance">Hollard Insurance</SelectItem>
+                                        <SelectItem value="glico insurance">Glico General Insurance</SelectItem>
+                                        <SelectItem value="vanguard insurance">Vanguard Assurance</SelectItem>
+                                        <SelectItem value="prime insurance">Prime Insurance</SelectItem>
+                                        <SelectItem value="best assurance">Best Assurance</SelectItem>
+                                        <SelectItem value="loyalty insurance">Loyalty Insurance</SelectItem>
+                                        <SelectItem value="millennium insurance">Millennium Insurance</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -302,9 +303,7 @@ export const ConsultationForm = () => {
                                         </FormItem>
                                     )} 
                                 />
-                            </div>
-                            
-                            
+                            </div> 
                         </div>
                         <Button 
                             disabled={loading} 

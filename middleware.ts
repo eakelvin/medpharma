@@ -12,14 +12,14 @@ const isRestrictedRoute = createRouteMatcher([
 export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) auth().protect();
 
-  // if (isRestrictedRoute(req)) {
-  //   auth().protect(has => {
-  //     return (
-  //       has({ permission: 'org:sys_memberships:manage' }) ||
-  //       has({ permission: 'org:sys_domains_manage' })
-  //     )
-  //   })
-  // }
+  if (isRestrictedRoute(req)) {
+    auth().protect(has => {
+      return (
+        has({ permission: 'org:sys_memberships:manage' }) ||
+        has({ permission: 'org:sys_domains_manage' })
+      )
+    })
+  }
 });
 
 // export default clerkMiddleware();

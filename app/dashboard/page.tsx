@@ -13,7 +13,7 @@ const Dashboard = async () => {
   const consultations:Consultation[] = await allConsultations();
 
   const matchedConsultations = consultations?.filter(consultation =>
-    consultation.email === user?.emailAddresses[0].emailAddress &&
+    // consultation.email === user?.emailAddresses[0].emailAddress &&
     consultation.patientFirst === user?.firstName &&
     consultation.patientLast === user?.lastName
   );
@@ -33,7 +33,7 @@ const Dashboard = async () => {
           <h1 className='text-3xl mt-5'>Consultation Details</h1>
           {/* <UserDashboard consultations={consultations} /> */}
 
-          <div>
+          <div className='grid md:grid-cols-2 lg:grid-cols-3'>
             {matchedConsultations?.length > 0 ? (
               matchedConsultations.map((consultation) => (
                 <div key={consultation._id} className="mt-5 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -43,7 +43,7 @@ const Dashboard = async () => {
                   </p>
                   <p className='font-extrabold text-xl'>Consultation Type: {consultation.consultation}</p>
                   <p>Condition: <span className='text-sm'>{consultation.condition}</span></p>
-                  <p className="my-2 font-normal text-gray-500 dark:text-gray-400">
+                  <p className="mt-2 font-normal text-gray-500 dark:text-gray-400">
                     Appointment Date:
                     {new Date(consultation.consultDate).toLocaleDateString()}
                   </p>

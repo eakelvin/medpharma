@@ -7,6 +7,7 @@ import { MdDashboard } from "react-icons/md";
 import SidebarItem from "./item";
 import { LucideIcon, LayoutDashboard, Newspaper } from "lucide-react";
 import admin from '../../assets/images/admin.jpg'
+import { UserButton } from "@clerk/nextjs";
 
 interface SideBarItem {
     name: string;
@@ -91,7 +92,7 @@ export const Sidenav = () => {
                     </div>
                 </div>
 
-                <p>User Profile</p>
+                <UserButton />
             </div>
 
             <div

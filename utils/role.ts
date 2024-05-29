@@ -13,7 +13,7 @@ function checkUserRole(session:any) {
     // Loop through all organization memberships
     for (const membership of organizationMemberships) {
       if (membership.role) {
-        return membership.role.toLowerCase(); // Return the role in lowercase if it exists
+        return membership.role.toLowerCase();
       }
     }
   

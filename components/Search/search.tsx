@@ -9,7 +9,9 @@ type Props = {
 };
 
 export const SearchBar = ({ searchValues }: Props) => {
-    const { control, handleSubmit, watch, setValue } = useForm<{searchValue: string}>();
+    const { 
+        control, handleSubmit, watch, setValue 
+    } = useForm<{searchValue: string}>();
     const searchTerm = watch('searchValue') || "";
     
     return (
@@ -27,33 +29,33 @@ export const SearchBar = ({ searchValues }: Props) => {
                         </div>
                         <input
                             {...field} 
-                            type="search"
-                            // onBlur={onBlur}
-                            // onChangeText={onChange}
-                            // value={value} 
+                            type="search" 
                             className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
-                            placeholder="Search..." 
+                            placeholder="Search by Condition and Healthcare..." 
                         />
                         {searchTerm?.length !== 0 && 
                             <div id="search details" className="w-full z-50 select-none h-[20rem] px-3 pt-2 bg-gray-200 absolute top-[2.2rem] max-lg:top-10 max-md:top-11 left-0 rounded-md animate-[fadeIn_0.1s_ease-out]">
                                 <ul className="text-black text-base font-semibold">
-                                {searchValues
-                                    .filter((item) => item.patientFirst.toLowerCase().includes(searchTerm.toLowerCase()))
-                                    ?.map((item, idx) => (
-                                    <li 
-                                        key={idx} 
-                                        className="hover:underline cursor-pointer" 
-                                        onClick={()=>{}}
-                                    >
-                                        {item.patientFirst}
-                                    </li>
-                                ))}
+                                    {searchValues
+                                        .filter(
+                                            (item) => 
+                                            item.condition.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                            item.healthcare.toLowerCase().includes(searchTerm.toLowerCase())
+                                        ) 
+                                        ?.map((item, idx) => (
+                                            <li 
+                                                key={idx} 
+                                                className="hover:underline cursor-pointer" 
+                                                onClick={()=>{}}
+                                            >
+                                                {/* {item.condition} */}
+                                                {item.healthcare}
+                                            </li>
+                                    ))}
                                 </ul>
                             </div>
                         }
-                    </div>
-
-                    
+                    </div>  
                 )}
             />
         </div>
